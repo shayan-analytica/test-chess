@@ -15,4 +15,4 @@ router.get('/schedule/:instructorId', authMiddleware, roleMiddleware('admin'), g
 router.put('/schedule/:scheduleId', authMiddleware, roleMiddleware('admin'), updateSchedule);
 router.delete('/schedule/:scheduleId', authMiddleware, roleMiddleware('admin'), deleteSchedule);
 
-module.exports = router;
+export default router;

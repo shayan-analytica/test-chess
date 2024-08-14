@@ -24,4 +24,4 @@ router.put('/plans/:planId', updatePlan);
 // Delete a plan by ID
 router.delete('/plans/:planId', deletePlan);
 
-module.exports = router;
+export default router;

@@ -8,4 +8,4 @@ const router = express.Router();
 router.post('/instructor/register', authMiddleware, roleMiddleware('admin'), instructorRegister);
 router.post('/instructor/login', instructorLogin);
 
-module.exports = router;
+export default router;
