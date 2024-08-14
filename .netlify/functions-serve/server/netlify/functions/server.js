@@ -85582,11 +85582,7 @@ var mongoose = require_mongoose2();
 require_main().config();
 var connectDB = async () => {
   try {
-    console.log("Mongo url", process.env.MONGO_DB_URL);
-    await mongoose.connect(process.env.MONGO_DB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(process.env.MONGO_DB_URL);
     console.log("MongoDB connected");
   } catch (err) {
     console.error(err);
