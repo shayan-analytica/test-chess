@@ -65509,10 +65509,10 @@ var require_connection2 = __commonJS({
         });
       });
     };
-    async function _wrapUserTransaction(fn, session, mongoose) {
+    async function _wrapUserTransaction(fn, session, mongoose2) {
       try {
-        const res = mongoose.transactionAsyncLocalStorage == null ? await fn(session) : await new Promise((resolve) => {
-          mongoose.transactionAsyncLocalStorage.run(
+        const res = mongoose2.transactionAsyncLocalStorage == null ? await fn(session) : await new Promise((resolve) => {
+          mongoose2.transactionAsyncLocalStorage.run(
             { session },
             () => resolve(fn(session))
           );
@@ -79095,7 +79095,7 @@ var require_mongoose = __commonJS({
     Mongoose.prototype.ConnectionStates = STATES;
     Mongoose.prototype.driver = driver;
     Mongoose.prototype.setDriver = function setDriver(driver2) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (_mongoose.__driver === driver2) {
         return _mongoose;
       }
@@ -79128,7 +79128,7 @@ var require_mongoose = __commonJS({
       return _mongoose;
     };
     Mongoose.prototype.set = function(key, value) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (arguments.length === 1 && typeof key !== "object") {
         if (VALID_OPTIONS.indexOf(key) === -1) {
           const error2 = new SetOptionError();
@@ -79189,7 +79189,7 @@ var require_mongoose = __commonJS({
     };
     Mongoose.prototype.get = Mongoose.prototype.set;
     Mongoose.prototype.createConnection = function(uri, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       const Connection = _mongoose.__driver.Connection;
       const conn = new Connection(_mongoose);
       _mongoose.connections.push(conn);
@@ -79204,7 +79204,7 @@ var require_mongoose = __commonJS({
       if (typeof options === "function" || arguments.length >= 3 && typeof arguments[2] === "function") {
         throw new MongooseError("Mongoose.prototype.connect() no longer accepts a callback");
       }
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (_mongoose.connection == null) {
         _createDefaultConnection(_mongoose);
       }
@@ -79215,7 +79215,7 @@ var require_mongoose = __commonJS({
       if (arguments.length >= 1 && typeof arguments[0] === "function") {
         throw new MongooseError("Mongoose.prototype.disconnect() no longer accepts a callback");
       }
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       const remaining = _mongoose.connections.length;
       if (remaining <= 0) {
         return;
@@ -79223,18 +79223,18 @@ var require_mongoose = __commonJS({
       await Promise.all(_mongoose.connections.map((conn) => conn.close()));
     };
     Mongoose.prototype.startSession = function() {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       return _mongoose.connection.startSession.apply(_mongoose.connection, arguments);
     };
     Mongoose.prototype.pluralize = function(fn) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (arguments.length > 0) {
         _mongoose._pluralize = fn;
       }
       return _mongoose._pluralize;
     };
     Mongoose.prototype.model = function(name, schema, collection, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       if (typeof schema === "string") {
         collection = schema;
         schema = false;
@@ -79282,7 +79282,7 @@ var require_mongoose = __commonJS({
       return model;
     };
     Mongoose.prototype._model = function(name, schema, collection, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       let model;
       if (typeof name === "function") {
         model = name;
@@ -79321,25 +79321,25 @@ var require_mongoose = __commonJS({
       return model;
     };
     Mongoose.prototype.deleteModel = function(name) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       _mongoose.connection.deleteModel(name);
       delete _mongoose.models[name];
       return _mongoose;
     };
     Mongoose.prototype.modelNames = function() {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       const names = Object.keys(_mongoose.models);
       return names;
     };
     Mongoose.prototype._applyPlugins = function(schema, options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       options = options || {};
       options.applyPluginsToDiscriminators = _mongoose.options && _mongoose.options.applyPluginsToDiscriminators || false;
       options.applyPluginsToChildSchemas = typeof (_mongoose.options && _mongoose.options.applyPluginsToChildSchemas) === "boolean" ? _mongoose.options.applyPluginsToChildSchemas : true;
       applyPlugins(schema, _mongoose.plugins, options, "$globalPluginsApplied");
     };
     Mongoose.prototype.plugin = function(fn, opts) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       _mongoose.plugins.push([fn, opts]);
       return _mongoose;
     };
@@ -79387,14 +79387,14 @@ var require_mongoose = __commonJS({
     Mongoose.prototype.DocumentProvider = require_documentProvider();
     Mongoose.prototype.ObjectId = SchemaTypes.ObjectId;
     Mongoose.prototype.isValidObjectId = function(v) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       return _mongoose.Types.ObjectId.isValid(v);
     };
     Mongoose.prototype.isObjectIdOrHexString = function(v) {
       return isBsonType(v, "ObjectId") || typeof v === "string" && objectIdHexRegexp.test(v);
     };
     Mongoose.prototype.syncIndexes = function(options) {
-      const _mongoose = this instanceof Mongoose ? this : mongoose;
+      const _mongoose = this instanceof Mongoose ? this : mongoose2;
       return _mongoose.connection.syncIndexes(options);
     };
     Mongoose.prototype.Decimal128 = SchemaTypes.Decimal128;
@@ -79414,15 +79414,15 @@ var require_mongoose = __commonJS({
     Mongoose.prototype.skipMiddlewareFunction = Kareem.skipWrappedFunction;
     Mongoose.prototype.overwriteMiddlewareResult = Kareem.overwriteResult;
     Mongoose.prototype.omitUndefined = require_omitUndefined();
-    function _createDefaultConnection(mongoose2) {
-      if (mongoose2.connection) {
+    function _createDefaultConnection(mongoose3) {
+      if (mongoose3.connection) {
         return;
       }
-      const conn = mongoose2.createConnection();
+      const conn = mongoose3.createConnection();
       conn[defaultConnectionSymbol] = true;
-      conn.models = mongoose2.models;
+      conn.models = mongoose3.models;
     }
-    var mongoose = module2.exports = exports2 = new Mongoose({
+    var mongoose2 = module2.exports = exports2 = new Mongoose({
       [defaultMongooseSymbol]: true
     });
   }
@@ -79434,10 +79434,10 @@ var require_lib9 = __commonJS({
     "use strict";
     var mongodbDriver = require_node_mongodb_native();
     require_driver().set(mongodbDriver);
-    var mongoose = require_mongoose();
-    mongoose.setDriver(mongodbDriver);
-    mongoose.Mongoose.prototype.mongo = require_lib6();
-    module2.exports = mongoose;
+    var mongoose2 = require_mongoose();
+    mongoose2.setDriver(mongodbDriver);
+    mongoose2.Mongoose.prototype.mongo = require_lib6();
+    module2.exports = mongoose2;
   }
 });
 
@@ -79445,74 +79445,54 @@ var require_lib9 = __commonJS({
 var require_mongoose2 = __commonJS({
   "node_modules/mongoose/index.js"(exports2, module2) {
     "use strict";
-    var mongoose = require_lib9();
-    module2.exports = mongoose;
-    module2.exports.default = mongoose;
-    module2.exports.mongoose = mongoose;
-    module2.exports.cast = mongoose.cast;
-    module2.exports.STATES = mongoose.STATES;
-    module2.exports.setDriver = mongoose.setDriver;
-    module2.exports.set = mongoose.set;
-    module2.exports.get = mongoose.get;
-    module2.exports.createConnection = mongoose.createConnection;
-    module2.exports.connect = mongoose.connect;
-    module2.exports.disconnect = mongoose.disconnect;
-    module2.exports.startSession = mongoose.startSession;
-    module2.exports.pluralize = mongoose.pluralize;
-    module2.exports.model = mongoose.model;
-    module2.exports.deleteModel = mongoose.deleteModel;
-    module2.exports.modelNames = mongoose.modelNames;
-    module2.exports.plugin = mongoose.plugin;
-    module2.exports.connections = mongoose.connections;
-    module2.exports.version = mongoose.version;
-    module2.exports.Mongoose = mongoose.Mongoose;
-    module2.exports.Schema = mongoose.Schema;
-    module2.exports.SchemaType = mongoose.SchemaType;
-    module2.exports.SchemaTypes = mongoose.SchemaTypes;
-    module2.exports.VirtualType = mongoose.VirtualType;
-    module2.exports.Types = mongoose.Types;
-    module2.exports.Query = mongoose.Query;
-    module2.exports.Model = mongoose.Model;
-    module2.exports.Document = mongoose.Document;
-    module2.exports.ObjectId = mongoose.ObjectId;
-    module2.exports.isValidObjectId = mongoose.isValidObjectId;
-    module2.exports.isObjectIdOrHexString = mongoose.isObjectIdOrHexString;
-    module2.exports.syncIndexes = mongoose.syncIndexes;
-    module2.exports.Decimal128 = mongoose.Decimal128;
-    module2.exports.Mixed = mongoose.Mixed;
-    module2.exports.Date = mongoose.Date;
-    module2.exports.Number = mongoose.Number;
-    module2.exports.Error = mongoose.Error;
-    module2.exports.MongooseError = mongoose.MongooseError;
-    module2.exports.now = mongoose.now;
-    module2.exports.CastError = mongoose.CastError;
-    module2.exports.SchemaTypeOptions = mongoose.SchemaTypeOptions;
-    module2.exports.mongo = mongoose.mongo;
-    module2.exports.mquery = mongoose.mquery;
-    module2.exports.sanitizeFilter = mongoose.sanitizeFilter;
-    module2.exports.trusted = mongoose.trusted;
-    module2.exports.skipMiddlewareFunction = mongoose.skipMiddlewareFunction;
-    module2.exports.overwriteMiddlewareResult = mongoose.overwriteMiddlewareResult;
-  }
-});
-
-// config/db.js
-var require_db3 = __commonJS({
-  "config/db.js"(exports2, module2) {
-    var mongoose = require_mongoose2();
-    var connectDB2 = async () => {
-      try {
-        await mongoose.connect(process.env.MONGO_DB_URL, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true
-        });
-        console.log("MongoDB connected");
-      } catch (err) {
-        console.error(err);
-        process.exit(1);
-      }
-    };
-    module2.exports = connectDB2;
+    var mongoose2 = require_lib9();
+    module2.exports = mongoose2;
+    module2.exports.default = mongoose2;
+    module2.exports.mongoose = mongoose2;
+    module2.exports.cast = mongoose2.cast;
+    module2.exports.STATES = mongoose2.STATES;
+    module2.exports.setDriver = mongoose2.setDriver;
+    module2.exports.set = mongoose2.set;
+    module2.exports.get = mongoose2.get;
+    module2.exports.createConnection = mongoose2.createConnection;
+    module2.exports.connect = mongoose2.connect;
+    module2.exports.disconnect = mongoose2.disconnect;
+    module2.exports.startSession = mongoose2.startSession;
+    module2.exports.pluralize = mongoose2.pluralize;
+    module2.exports.model = mongoose2.model;
+    module2.exports.deleteModel = mongoose2.deleteModel;
+    module2.exports.modelNames = mongoose2.modelNames;
+    module2.exports.plugin = mongoose2.plugin;
+    module2.exports.connections = mongoose2.connections;
+    module2.exports.version = mongoose2.version;
+    module2.exports.Mongoose = mongoose2.Mongoose;
+    module2.exports.Schema = mongoose2.Schema;
+    module2.exports.SchemaType = mongoose2.SchemaType;
+    module2.exports.SchemaTypes = mongoose2.SchemaTypes;
+    module2.exports.VirtualType = mongoose2.VirtualType;
+    module2.exports.Types = mongoose2.Types;
+    module2.exports.Query = mongoose2.Query;
+    module2.exports.Model = mongoose2.Model;
+    module2.exports.Document = mongoose2.Document;
+    module2.exports.ObjectId = mongoose2.ObjectId;
+    module2.exports.isValidObjectId = mongoose2.isValidObjectId;
+    module2.exports.isObjectIdOrHexString = mongoose2.isObjectIdOrHexString;
+    module2.exports.syncIndexes = mongoose2.syncIndexes;
+    module2.exports.Decimal128 = mongoose2.Decimal128;
+    module2.exports.Mixed = mongoose2.Mixed;
+    module2.exports.Date = mongoose2.Date;
+    module2.exports.Number = mongoose2.Number;
+    module2.exports.Error = mongoose2.Error;
+    module2.exports.MongooseError = mongoose2.MongooseError;
+    module2.exports.now = mongoose2.now;
+    module2.exports.CastError = mongoose2.CastError;
+    module2.exports.SchemaTypeOptions = mongoose2.SchemaTypeOptions;
+    module2.exports.mongo = mongoose2.mongo;
+    module2.exports.mquery = mongoose2.mquery;
+    module2.exports.sanitizeFilter = mongoose2.sanitizeFilter;
+    module2.exports.trusted = mongoose2.trusted;
+    module2.exports.skipMiddlewareFunction = mongoose2.skipMiddlewareFunction;
+    module2.exports.overwriteMiddlewareResult = mongoose2.overwriteMiddlewareResult;
   }
 });
 
@@ -85101,15 +85081,15 @@ var require_jsonwebtoken = __commonJS({
 // models/Admin.js
 var require_Admin = __commonJS({
   "models/Admin.js"(exports2, module2) {
-    var mongoose = require_mongoose2();
+    var mongoose2 = require_mongoose2();
     var bcrypt = require_bcryptjs();
-    var adminSchema = new mongoose.Schema({
+    var adminSchema = new mongoose2.Schema({
       name: { type: String, required: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true },
       role: { type: String, required: true }
     });
-    var Admin = mongoose.model("Admin", adminSchema);
+    var Admin = mongoose2.model("Admin", adminSchema);
     module2.exports = Admin;
   }
 });
@@ -85180,28 +85160,16 @@ var require_adminController = __commonJS({
   }
 });
 
-// routes/adminRoutes.js
-var require_adminRoutes = __commonJS({
-  "routes/adminRoutes.js"(exports2, module2) {
-    var express2 = require("express");
-    var { adminRegister, adminLogin } = require_adminController();
-    var router2 = express2.Router();
-    router2.post("/admin/register", adminRegister);
-    router2.post("/admin/login", adminLogin);
-    module2.exports = router2;
-  }
-});
-
 // models/User.js
 var require_User = __commonJS({
   "models/User.js"(exports2, module2) {
-    var mongoose = require_mongoose2();
-    var userSchema = new mongoose.Schema({
+    var mongoose2 = require_mongoose2();
+    var userSchema = new mongoose2.Schema({
       name: { type: String, required: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true }
     });
-    var User = mongoose.model("User", userSchema);
+    var User = mongoose2.model("User", userSchema);
     module2.exports = User;
   }
 });
@@ -85279,7 +85247,7 @@ var require_authMiddleware = __commonJS({
     var jwt = require_jsonwebtoken();
     var Admin = require_Admin();
     var JWT_SECRET = require_jwtSecret();
-    var authMiddleware = async (req, res, next) => {
+    var authMiddleware4 = async (req, res, next) => {
       try {
         const token = req.header("Authorization")?.replace("Bearer ", "");
         if (!token) {
@@ -85296,14 +85264,14 @@ var require_authMiddleware = __commonJS({
         res.status(401).json({ message: "Invalid token" });
       }
     };
-    module2.exports = authMiddleware;
+    module2.exports = authMiddleware4;
   }
 });
 
 // middleware/roleMiddleware.js
 var require_roleMiddleware = __commonJS({
   "middleware/roleMiddleware.js"(exports2, module2) {
-    var roleMiddleware = (role) => {
+    var roleMiddleware4 = (role) => {
       return (req, res, next) => {
         if (req.admin.role !== role) {
           return res.status(403).json({ message: "Access denied" });
@@ -85311,36 +85279,22 @@ var require_roleMiddleware = __commonJS({
         next();
       };
     };
-    module2.exports = roleMiddleware;
-  }
-});
-
-// routes/userRoutes.js
-var require_userRoutes = __commonJS({
-  "routes/userRoutes.js"(exports2, module2) {
-    var express2 = require("express");
-    var { userRegister, userLogin } = require_userController();
-    var authMiddleware = require_authMiddleware();
-    var roleMiddleware = require_roleMiddleware();
-    var router2 = express2.Router();
-    router2.post("/user/register", userRegister);
-    router2.post("/user/login", userLogin);
-    module2.exports = router2;
+    module2.exports = roleMiddleware4;
   }
 });
 
 // models/Instructor.js
 var require_Instructor = __commonJS({
   "models/Instructor.js"(exports2, module2) {
-    var mongoose = require_mongoose2();
+    var mongoose2 = require_mongoose2();
     var bcrypt = require_bcryptjs();
-    var adminSchema = new mongoose.Schema({
+    var adminSchema = new mongoose2.Schema({
       name: { type: String, required: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true },
       role: { type: String, required: true }
     });
-    var Instructor = mongoose.model("Instructor", adminSchema);
+    var Instructor = mongoose2.model("Instructor", adminSchema);
     module2.exports = Instructor;
   }
 });
@@ -85348,15 +85302,15 @@ var require_Instructor = __commonJS({
 // models/schedule.js
 var require_schedule = __commonJS({
   "models/schedule.js"(exports2, module2) {
-    var mongoose = require_mongoose2();
-    var instructorScheduleSchema = new mongoose.Schema({
-      instructorId: { type: mongoose.Schema.Types.ObjectId, ref: "Instructor", required: true },
+    var mongoose2 = require_mongoose2();
+    var instructorScheduleSchema = new mongoose2.Schema({
+      instructorId: { type: mongoose2.Schema.Types.ObjectId, ref: "Instructor", required: true },
       startTime: { type: String, required: true },
       // e.g., '09:00 AM'
       endTime: { type: String, required: true }
       // e.g., '11:00 AM'
     });
-    var InstructorSchedule = mongoose.model("InstructorSchedule", instructorScheduleSchema);
+    var InstructorSchedule = mongoose2.model("InstructorSchedule", instructorScheduleSchema);
     module2.exports = InstructorSchedule;
   }
 });
@@ -85427,20 +85381,6 @@ var require_instructorController = __commonJS({
         res.status(500).json({ message: "Server error" });
       }
     };
-  }
-});
-
-// routes/instructorRoutes.js
-var require_instructorRoutes = __commonJS({
-  "routes/instructorRoutes.js"(exports2, module2) {
-    var express2 = require("express");
-    var { instructorRegister, instructorLogin } = require_instructorController();
-    var authMiddleware = require_authMiddleware();
-    var roleMiddleware = require_roleMiddleware();
-    var router2 = express2.Router();
-    router2.post("/instructor/register", authMiddleware, roleMiddleware("admin"), instructorRegister);
-    router2.post("/instructor/login", instructorLogin);
-    module2.exports = router2;
   }
 });
 
@@ -85529,38 +85469,17 @@ var require_scheduleController = __commonJS({
   }
 });
 
-// routes/scheduleRoutes.js
-var require_scheduleRoutes = __commonJS({
-  "routes/scheduleRoutes.js"(exports2, module2) {
-    var express2 = require("express");
-    var {
-      createSchedule,
-      getInstructorSchedules,
-      updateSchedule,
-      deleteSchedule
-    } = require_scheduleController();
-    var authMiddleware = require_authMiddleware();
-    var roleMiddleware = require_roleMiddleware();
-    var router2 = express2.Router();
-    router2.post("/schedule", authMiddleware, roleMiddleware("admin"), createSchedule);
-    router2.get("/schedule/:instructorId", authMiddleware, roleMiddleware("admin"), getInstructorSchedules);
-    router2.put("/schedule/:scheduleId", authMiddleware, roleMiddleware("admin"), updateSchedule);
-    router2.delete("/schedule/:scheduleId", authMiddleware, roleMiddleware("admin"), deleteSchedule);
-    module2.exports = router2;
-  }
-});
-
 // models/Plan.js
 var require_Plan = __commonJS({
   "models/Plan.js"(exports2, module2) {
-    var mongoose = require_mongoose2();
-    var planSchema = new mongoose.Schema({
+    var mongoose2 = require_mongoose2();
+    var planSchema = new mongoose2.Schema({
       name: { type: String, required: true },
       price: { type: Number, required: true },
       status: { type: String, enum: ["active", "inactive"], required: true },
       features: { type: [String], required: true }
     });
-    var Plan = mongoose.model("Plan", planSchema);
+    var Plan = mongoose2.model("Plan", planSchema);
     module2.exports = Plan;
   }
 });
@@ -85646,27 +85565,6 @@ var require_planController = __commonJS({
   }
 });
 
-// routes/planRoutes.js
-var require_planRoutes = __commonJS({
-  "routes/planRoutes.js"(exports2, module2) {
-    var express2 = require("express");
-    var {
-      createPlan,
-      getAllPlans,
-      getPlanById,
-      updatePlan,
-      deletePlan
-    } = require_planController();
-    var router2 = express2.Router();
-    router2.post("/plans", createPlan);
-    router2.get("/plans", getAllPlans);
-    router2.get("/plans/:planId", getPlanById);
-    router2.put("/plans/:planId", updatePlan);
-    router2.delete("/plans/:planId", deletePlan);
-    module2.exports = router2;
-  }
-});
-
 // netlify/functions/server.js
 var server_exports = {};
 __export(server_exports, {
@@ -85678,30 +85576,106 @@ var import_serverless_http = __toESM(require_serverless_http());
 var import_express = __toESM(require("express"));
 var import_body_parser = __toESM(require_body_parser());
 var import_cors = __toESM(require_lib3());
-var import_db = __toESM(require_db3());
-var import_adminRoutes = __toESM(require_adminRoutes());
-var import_userRoutes = __toESM(require_userRoutes());
-var import_instructorRoutes = __toESM(require_instructorRoutes());
-var import_scheduleRoutes = __toESM(require_scheduleRoutes());
-var import_planRoutes = __toESM(require_planRoutes());
+
+// config/db.js
+var mongoose = require_mongoose2();
+require_main().config();
+var connectDB = async () => {
+  try {
+    console.log("Mongo url", process.env.MONGO_DB_URL);
+    await mongoose.connect(process.env.MONGO_DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+};
+var db_default = connectDB;
+
+// routes/adminRoutes.js
+var express = require("express");
+var { adminRegister, adminLogin } = require_adminController();
+var router = express.Router();
+router.post("/admin/register", adminRegister);
+router.post("/admin/login", adminLogin);
+var adminRoutes_default = router;
+
+// routes/userRoutes.js
+var express2 = require("express");
+var { userRegister, userLogin } = require_userController();
+var authMiddleware = require_authMiddleware();
+var roleMiddleware = require_roleMiddleware();
+var router2 = express2.Router();
+router2.post("/user/register", userRegister);
+router2.post("/user/login", userLogin);
+var userRoutes_default = router2;
+
+// routes/instructorRoutes.js
+var express3 = require("express");
+var { instructorRegister, instructorLogin } = require_instructorController();
+var authMiddleware2 = require_authMiddleware();
+var roleMiddleware2 = require_roleMiddleware();
+var router3 = express3.Router();
+router3.post("/instructor/register", authMiddleware2, roleMiddleware2("admin"), instructorRegister);
+router3.post("/instructor/login", instructorLogin);
+var instructorRoutes_default = router3;
+
+// routes/scheduleRoutes.js
+var express4 = require("express");
+var {
+  createSchedule,
+  getInstructorSchedules,
+  updateSchedule,
+  deleteSchedule
+} = require_scheduleController();
+var authMiddleware3 = require_authMiddleware();
+var roleMiddleware3 = require_roleMiddleware();
+var router4 = express4.Router();
+router4.post("/schedule", authMiddleware3, roleMiddleware3("admin"), createSchedule);
+router4.get("/schedule/:instructorId", authMiddleware3, roleMiddleware3("admin"), getInstructorSchedules);
+router4.put("/schedule/:scheduleId", authMiddleware3, roleMiddleware3("admin"), updateSchedule);
+router4.delete("/schedule/:scheduleId", authMiddleware3, roleMiddleware3("admin"), deleteSchedule);
+var scheduleRoutes_default = router4;
+
+// routes/planRoutes.js
+var express5 = require("express");
+var {
+  createPlan,
+  getAllPlans,
+  getPlanById,
+  updatePlan,
+  deletePlan
+} = require_planController();
+var router5 = express5.Router();
+router5.post("/plans", createPlan);
+router5.get("/plans", getAllPlans);
+router5.get("/plans/:planId", getPlanById);
+router5.put("/plans/:planId", updatePlan);
+router5.delete("/plans/:planId", deletePlan);
+var planRoutes_default = router5;
+
+// netlify/functions/server.js
 import_dotenv.default.config();
 var api = (0, import_express.default)();
-var router = (0, import_express.Router)();
+var router6 = (0, import_express.Router)();
 api.use((0, import_cors.default)());
 api.use(import_body_parser.default.json());
 var connectAndRun = async () => {
-  await (0, import_db.default)();
-  router.use("/auth", import_adminRoutes.default);
-  router.use("/auth", import_userRoutes.default);
-  router.use("/auth", import_instructorRoutes.default);
-  router.use("/admin", import_scheduleRoutes.default);
-  router.use("/api", import_planRoutes.default);
+  await db_default();
+  router6.use("/auth", adminRoutes_default);
+  router6.use("/auth", userRoutes_default);
+  router6.use("/auth", instructorRoutes_default);
+  router6.use("/admin", scheduleRoutes_default);
+  router6.use("/api", planRoutes_default);
 };
 connectAndRun();
-router.get("/health", (req, res) => {
+router6.get("/health", (req, res) => {
   res.send("Server is running successfully!!");
 });
-api.use("/api", router);
+api.use("/api", router6);
 var handler = (0, import_serverless_http.default)(api);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
